@@ -88,3 +88,28 @@ select e.empno,e.ename,d.dname,a.job_role,d.dloc,p.ploc
 from employee e,dept d,assignedto a,project p
 where e.dno = d.dno and e.empno = a.empno and
 a.pno = p.pno and d.dloc = p.ploc;
+
+select ename from employee
+where mgrno = (select max(mgrno)
+from employee);
+
+select ename from employee
+where sal > (select avg(sal)
+from employee);
+
+select ename from employee
+where sal = (select max(sal)
+from employee where 
+sal < (select max(sal) from employee));
+
+select * from employee where 
+empno = (select empno from incentives
+where inamount = (select max(inamount)
+from incentives where inamount <
+(select max(inamount) from incentives)));
+
+SELECT e.empno, e.ename, e.dno
+FROM employee e
+JOIN employee m ON e.mgrno = m.empno
+WHERE e.dno = m.dno;
+
